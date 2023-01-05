@@ -1,4 +1,7 @@
 # Starter pipeline
+- task: SonarQubePrepare@5
+  inputs:
+    scannerMode: 'MSBuild'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -27,3 +30,14 @@ steps:
       java -jar pipeline-scan.jar -vid "df121eab123b123bb412bde123124" -vkey "123dbe23c88ebe" -f $(build.artifactstagingdirectory)\Verademo-dotnet.zip || true
 #      java -jar pipeline-scan.jar -vid $(VERACODE_API_ID) -vkey $(VERACODE_API_KEY) -f $(build.artifactstagingdirectory)\Verademo-dotnet.zip || true
 
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    failOnMinTestsNotRun: true
+
+    
