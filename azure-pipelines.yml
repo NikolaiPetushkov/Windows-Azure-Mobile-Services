@@ -40,4 +40,14 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
     failOnMinTestsNotRun: true
 
+- task: Veracode@3
+  inputs:
+    ConnectionDetailsSelection: 'Credentials'
+    apiId: '222'
+    apiKey: '333'
+    veracodeAppProfile: '$(system.teamProject)'
+    version: '$(build.buildNumber)'
+    filepath: '$(build.artifactstagingdirectory)'
+    importResults: true
+    maximumWaitTime: '360'
     
